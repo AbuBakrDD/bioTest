@@ -109,7 +109,14 @@ func getEnv(key, fallback string) string {
 }
 
 func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	addr := ":" + port
 	http.HandleFunc("/send", handler)
-	log.Println("🚀 Сервер запущен на :8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+
+	log.Printf("🚀 Сервер запущен на порту %s", port)
+	log.Fatal(http.ListenAndServe(addr, nil))
 }
